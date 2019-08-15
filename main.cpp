@@ -62,36 +62,34 @@ int main() {
                }
            }
            else if (--tickCtr == 0) { /* time for the tick? */
-               tickCtr = 10;
-               e.sig = TIME_TICK_1S_SIG;
-               msg = "TICK";
-               }
-        else if (--tickCtr == 0) { /* time for the tick? */
-            tickCtr = 10;
-            e.sig = TIME_TICK_1S_SIG;
-            msg = "TICK";
-            seconds++;
-            printf("Time: %ds. ", seconds);
-        }
-		if (msg.length()) {
+                tickCtr = 10;
+                e.sig = TIME_TICK_1S_SIG;
+                msg = "TICK";
+                seconds++;
+                printf("Time: %ds. ", seconds);
+           }
+		   if (msg.length()) {
             /* dispatch the event into the state machine */
-            QState r;
-            QEvt e;
-			healthQEvt HOS_e;
-            if (e.sig == DMG_RCVD_SIG) {
-                HOS_e.super = e;
-                HOS_e.value = 5;
-                r = QMSM_DISPATCH(the_health,  (QEvt *)&HOS_e);
-                r = QMSM_DISPATCH(the_player_type,  (QEvt *)&HOS_e);
-            r = QMSM_DISPATCH(the_health,  &e);
-			r = QMSM_DISPATCH(the_ability,  &e);
-			r = QMSM_DISPATCH(the_player_type,  &e);
-        }
-        #ifdef DEBUG
-            printf("returned: %u\n\r", r);
-        #endif
+                QState r;
+                QEvt e;
+			    healthQEvt HOS_e;
+                if (e.sig == DMG_RCVD_SIG) {
+                    HOS_e.super = e;
+                    HOS_e.value = 5;
+                    r = QMSM_DISPATCH(the_health,  (QEvt *)&HOS_e);
+                    r = QMSM_DISPATCH(the_player_type,  (QEvt *)&HOS_e);
+                    r = QMSM_DISPATCH(the_health,  &e);
+                } else {
+			        r = QMSM_DISPATCH(the_ability,  &e);
+			        r = QMSM_DISPATCH(the_player_type,  &e);
+			        r = QMSM_DISPATCH(the_health,  &e);
+                }
+
+           #ifdef DEBUG
+               printf("returned: %u\n\r", r);
+            #endif
    
-        }
+           }
     }
     return 0;
 }
