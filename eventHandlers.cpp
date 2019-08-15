@@ -63,6 +63,7 @@ void Player_Died(Health* me) {
     Vibro(DEATH_TO_S*1000/3);
     Flash(255, 0, 0, DEATH_TO_S*1000);
     SIMPLE_DISPATCH(the_ability, DISABLE);
+    SIMPLE_DISPATCH(the_player_type, DIE);
 }
 
 void ShowHP(Health* me) {

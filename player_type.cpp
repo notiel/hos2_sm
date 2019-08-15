@@ -134,6 +134,9 @@ QState Player_type_alive(Player_type * const me, QEvt const * const e) {
             SIMPLE_DISPATCH(the_ability, RESET); 
             break;
         }
+        case DIE_SIG: {
+            status_ = Q_TRAN(&Player_type_dead);
+        }
         /*${SMs::Player_type::SM::global::player_type::alive} */
         case Q_EXIT_SIG: {
             #ifdef DESKTOP
