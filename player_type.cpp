@@ -2,6 +2,10 @@
 #include "player_type.h"
 #include "eventHandlers.h"
 #include <stdint.h>
+
+#define DESKTOP
+#include "stdio.h"
+
 //Q_DEFINE_THIS_FILE
 /* global-scope definitions -----------------------------------------*/
 QHsm * const the_player_type = (QHsm *) &player_type; /* the opaque pointer */
@@ -66,14 +70,6 @@ QState Player_type_global(Player_type * const me, QEvt const * const e) {
     QState status_;
     switch (e->sig) {
 
-#ifdef DESKTOP
-        /*${SMs::Player_type::SM::global::TERMINATE} */
-        case TERMINATE_SIG: {
-            status_ = Q_TRAN(&Player_type_final);
-            break;
-        }
-#endif /* def DESKTOP */
-
         default: {
             status_ = Q_SUPER(&QHsm_top);
             break;
@@ -88,7 +84,7 @@ QState Player_type_player_type(Player_type * const me, QEvt const * const e) {
         /*${SMs::Player_type::SM::global::player_type} */
         case Q_ENTRY_SIG: {
             #ifdef DESKTOP
-                printf("Entered state player_type");
+                printf("Entered state player_type\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -96,7 +92,7 @@ QState Player_type_player_type(Player_type * const me, QEvt const * const e) {
         /*${SMs::Player_type::SM::global::player_type} */
         case Q_EXIT_SIG: {
             #ifdef DESKTOP
-                printf("Exited state player_type");
+                printf("Exited state player_type\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -131,7 +127,7 @@ QState Player_type_alive(Player_type * const me, QEvt const * const e) {
         /*${SMs::Player_type::SM::global::player_type::alive} */
         case Q_ENTRY_SIG: {
             #ifdef DESKTOP
-                printf("Entered state alive");
+                printf("Entered state alive\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
 			SIMPLE_DISPATCH(the_health, RESET);
@@ -141,7 +137,7 @@ QState Player_type_alive(Player_type * const me, QEvt const * const e) {
         /*${SMs::Player_type::SM::global::player_type::alive} */
         case Q_EXIT_SIG: {
             #ifdef DESKTOP
-                printf("Exited state alive");
+                printf("Exited state alive\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -160,7 +156,7 @@ QState Player_type_local(Player_type * const me, QEvt const * const e) {
         /*${SMs::Player_type::SM::global::player_type::alive::local} */
         case Q_ENTRY_SIG: {
             #ifdef DESKTOP
-                printf("Entered state local");
+                printf("Entered state local\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
 
@@ -170,7 +166,7 @@ QState Player_type_local(Player_type * const me, QEvt const * const e) {
         /*${SMs::Player_type::SM::global::player_type::alive::local} */
         case Q_EXIT_SIG: {
             #ifdef DESKTOP
-                printf("Exited state local");
+                printf("Exited state local\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -189,7 +185,7 @@ QState Player_type_normal(Player_type * const me, QEvt const * const e) {
         /*${SMs::Player_type::SM::global::player_type::alive::local::normal} */
         case Q_ENTRY_SIG: {
             #ifdef DESKTOP
-                printf("Entered state normal");
+                printf("Entered state normal\n");
             #endif /* def DESKTOP */
 		    me->TimerRegen = 0;
             status_ = Q_HANDLED();
@@ -198,7 +194,7 @@ QState Player_type_normal(Player_type * const me, QEvt const * const e) {
         /*${SMs::Player_type::SM::global::player_type::alive::local::normal} */
         case Q_EXIT_SIG: {
             #ifdef DESKTOP
-                printf("Exited state normal");
+                printf("Exited state normal\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -235,7 +231,7 @@ QState Player_type_regenerating(Player_type * const me, QEvt const * const e) {
         /*${SMs::Player_type::SM::global::player_type::alive::local::regenerating} */
         case Q_ENTRY_SIG: {
             #ifdef DESKTOP
-                printf("Entered state regenerating");
+                printf("Entered state regenerating\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -243,7 +239,7 @@ QState Player_type_regenerating(Player_type * const me, QEvt const * const e) {
         /*${SMs::Player_type::SM::global::player_type::alive::local::regenerating} */
         case Q_EXIT_SIG: {
             #ifdef DESKTOP
-                printf("Exited state regenerating");
+                printf("Exited state regenerating\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -276,7 +272,7 @@ QState Player_type_tailor(Player_type * const me, QEvt const * const e) {
         /*${SMs::Player_type::SM::global::player_type::alive::tailor} */
         case Q_ENTRY_SIG: {
             #ifdef DESKTOP
-                printf("Entered state tailor");
+                printf("Entered state tailor\n");
             #endif /* def DESKTOP */
 			MaxHP_Update(me->CharHealth, TailorHP);
             Flash(255, 255, 0, FLASH_MS);
@@ -286,7 +282,7 @@ QState Player_type_tailor(Player_type * const me, QEvt const * const e) {
         /*${SMs::Player_type::SM::global::player_type::alive::tailor} */
         case Q_EXIT_SIG: {
             #ifdef DESKTOP
-                printf("Exited state tailor");
+                printf("Exited state tailor\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -305,7 +301,7 @@ QState Player_type_stalker(Player_type * const me, QEvt const * const e) {
         /*${SMs::Player_type::SM::global::player_type::alive::stalker} */
         case Q_ENTRY_SIG: {
             #ifdef DESKTOP
-                printf("Entered state stalker");
+                printf("Entered state stalker\n");
             #endif /* def DESKTOP */
 			MaxHP_Update(me->CharHealth, StalkerHP);
             Flash(255, 0, 0, FLASH_MS);
@@ -315,7 +311,7 @@ QState Player_type_stalker(Player_type * const me, QEvt const * const e) {
         /*${SMs::Player_type::SM::global::player_type::alive::stalker} */
         case Q_EXIT_SIG: {
             #ifdef DESKTOP
-                printf("Exited state stalker");
+                printf("Exited state stalker\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -334,7 +330,7 @@ QState Player_type_dead(Player_type * const me, QEvt const * const e) {
         /*${SMs::Player_type::SM::global::player_type::dead} */
         case Q_ENTRY_SIG: {
             #ifdef DESKTOP
-                printf("Entered state dead");
+                printf("Entered state dead\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -342,7 +338,7 @@ QState Player_type_dead(Player_type * const me, QEvt const * const e) {
         /*${SMs::Player_type::SM::global::player_type::dead} */
         case Q_EXIT_SIG: {
             #ifdef DESKTOP
-                printf("Exited state dead");
+                printf("Exited state dead\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -362,7 +358,7 @@ QState Player_type_final(Player_type * const me, QEvt const * const e) {
     switch (e->sig) {
         /*${SMs::Player_type::SM::final} */
         case Q_ENTRY_SIG: {
-            printf("Bye! Bye!"); exit(0);
+            printf("Bye! Bye!");
             status_ = Q_HANDLED();
             break;
         }

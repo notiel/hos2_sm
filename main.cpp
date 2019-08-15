@@ -11,6 +11,8 @@
 #include "ability.h"
 #include "player_type.h"
 
+#define DESKTOP
+
 /*..........................................................................*/
 
 int main() {
@@ -28,14 +30,18 @@ int main() {
     printf("Press ESC to quit...\n");
 
       /* instantiate the HSM and trigger the initial transition */
-
+    Player_type_ctor(DEAD, (Health*)the_health);
+    printf("3\n");
     Health_ctor(DEAD, 30, 30, 0);
-	Ability_ctor(NONE, 0);
-	Player_type_ctor(DEAD, (Health*)the_health);
-
-	QMSM_INIT(the_health, (QEvt *)0);
-	QMSM_INIT(the_ability, (QEvt *)0);
+    printf("1\n");
+	Ability_ctor(0, NONE);
+	 printf("2\n");
 	QMSM_INIT(the_player_type, (QEvt *)0);
+	printf("4\n");
+	QMSM_INIT(the_ability, (QEvt *)0);
+	printf("5\n");
+	QMSM_INIT(the_health, (QEvt *)0);
+    printf("6\n");
     QEvt e;
     uint8_t c;
     for (;;) {

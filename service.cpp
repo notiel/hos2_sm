@@ -2,7 +2,7 @@
 #include "health.h"
 
 const KeyStroke KeyStrokes[]= {
-{    SHINE_RCVD_SIG,                 "SHINE_RCVD",                 's'},
+{    SHINE_RCVD_SIG,                 "SHINE_RCVD",                 'i'},
 {    CENTRAL_BUTTON_PRESSED_SIG,     "CENTRAL_BUTTON_PRESSED",     'b'},
 {    TIME_TICK_1S_SIG,               "TIME_TICK_1S",               's'},
 {    TIME_TICK_1M_SIG,               "TIME_TICK_1M",               'm'},

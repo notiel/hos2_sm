@@ -2,6 +2,10 @@
 #include "ability.h"
 #include "eventHandlers.h"
 #include <stdint.h>
+
+#define DESKTOP
+#include "stdio.h"
+
 //Q_DEFINE_THIS_FILE
 /* global-scope definitions -----------------------------------------*/
 QHsm * const the_ability = (QHsm *) &ability; /* the opaque pointer */
@@ -15,7 +19,7 @@ unsigned int ChargeTO = CHARGE_TO_S;
 
 void Ability_ctor(unsigned int ChargeTime, unsigned int State) {
     Ability *me = &ability;
-         me->ChargeTime = 0;
+        me->ChargeTime = ChargeTime;
         switch (State) {
             case NONE: {
                 me->StartState = (QStateHandler)&Ability_none;
@@ -57,14 +61,6 @@ QState Ability_global(Ability * const me, QEvt const * const e) {
     QState status_;
     switch (e->sig) {
 
-#ifdef DESKTOP
-        /*${SMs::Ability::SM::global::TERMINATE} */
-        case TERMINATE_SIG: {
-            status_ = Q_TRAN(&Ability_final);
-            break;
-        }
-#endif /* def DESKTOP */
-
         default: {
             status_ = Q_SUPER(&QHsm_top);
             break;
@@ -79,7 +75,7 @@ QState Ability_ability(Ability * const me, QEvt const * const e) {
         /*${SMs::Ability::SM::global::ability} */
         case Q_ENTRY_SIG: {
             #ifdef DESKTOP
-                printf("Entered state ability");
+                printf("Entered state ability\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -87,7 +83,7 @@ QState Ability_ability(Ability * const me, QEvt const * const e) {
         /*${SMs::Ability::SM::global::ability} */
         case Q_EXIT_SIG: {
             #ifdef DESKTOP
-                printf("Exited state ability");
+                printf("Exited state ability\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -116,7 +112,7 @@ QState Ability_none(Ability * const me, QEvt const * const e) {
         /*${SMs::Ability::SM::global::ability::none} */
         case Q_ENTRY_SIG: {
             #ifdef DESKTOP
-                printf("Entered state none");
+                printf("Entered state none\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
 			Ability_Save(NONE);
@@ -125,7 +121,7 @@ QState Ability_none(Ability * const me, QEvt const * const e) {
         /*${SMs::Ability::SM::global::ability::none} */
         case Q_EXIT_SIG: {
             #ifdef DESKTOP
-                printf("Exited state none");
+                printf("Exited state none\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -149,7 +145,7 @@ QState Ability_disabled(Ability * const me, QEvt const * const e) {
         /*${SMs::Ability::SM::global::ability::disabled} */
         case Q_ENTRY_SIG: {
             #ifdef DESKTOP
-                printf("Entered state disabled");
+                printf("Entered state disabled\n");
             #endif /* def DESKTOP */
 			Ability_Save(DISABLED);
             status_ = Q_HANDLED();
@@ -158,7 +154,7 @@ QState Ability_disabled(Ability * const me, QEvt const * const e) {
         /*${SMs::Ability::SM::global::ability::disabled} */
         case Q_EXIT_SIG: {
             #ifdef DESKTOP
-                printf("Exited state disabled");
+                printf("Exited state disabled\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -177,7 +173,7 @@ QState Ability_mutant(Ability * const me, QEvt const * const e) {
         /*${SMs::Ability::SM::global::ability::mutant} */
         case Q_ENTRY_SIG: {
             #ifdef DESKTOP
-                printf("Entered state mutant");
+                printf("Entered state mutant\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -185,7 +181,7 @@ QState Ability_mutant(Ability * const me, QEvt const * const e) {
         /*${SMs::Ability::SM::global::ability::mutant} */
         case Q_EXIT_SIG: {
             #ifdef DESKTOP
-                printf("Exited state mutant");
+                printf("Exited state mutant\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -204,7 +200,7 @@ QState Ability_ready(Ability * const me, QEvt const * const e) {
         /*${SMs::Ability::SM::global::ability::mutant::ready} */
         case Q_ENTRY_SIG: {
             #ifdef DESKTOP
-                printf("Entered state ready");
+                printf("Entered state ready\n");
             #endif /* def DESKTOP */
             Ability_Save(MUTANT_READY);
             ChargeTime_Update(me, 0);
@@ -214,7 +210,7 @@ QState Ability_ready(Ability * const me, QEvt const * const e) {
         /*${SMs::Ability::SM::global::ability::mutant::ready} */
         case Q_EXIT_SIG: {
             #ifdef DESKTOP
-                printf("Exited state ready");
+                printf("Exited state ready\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -249,7 +245,7 @@ QState Ability_charging(Ability * const me, QEvt const * const e) {
         /*${SMs::Ability::SM::global::ability::mutant::charging} */
         case Q_ENTRY_SIG: {
             #ifdef DESKTOP
-                printf("Entered state charging");
+                printf("Entered state charging\n");
             #endif /* def DESKTOP */
 			Ability_Save(MUTANT_CHARGING);
             ChargeTime_Update(me, 0);
@@ -260,7 +256,7 @@ QState Ability_charging(Ability * const me, QEvt const * const e) {
         /*${SMs::Ability::SM::global::ability::mutant::charging} */
         case Q_EXIT_SIG: {
             #ifdef DESKTOP
-                printf("Exited state charging");
+                printf("Exited state charging\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -302,9 +298,7 @@ QState Ability_final(Ability * const me, QEvt const * const e) {
     switch (e->sig) {
         /*${SMs::Ability::SM::final} */
         case Q_ENTRY_SIG: {
-            printf("
-            Bye! Bye!
-            "); exit(0);
+            printf("Bye! Bye!");
             status_ = Q_HANDLED();
             break;
         }
