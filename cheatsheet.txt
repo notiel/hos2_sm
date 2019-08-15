@@ -1,0 +1,18 @@
+Heart Of Storm State Machines
+DEBUG_SM enabled
+Desktop version
+        SHINE_RCVD - 'i'
+CENTRAL_BUTTON_PRESSED - 'b'
+      TIME_TICK_1S - 's'
+      TIME_TICK_1M - 'm'
+          DMG_RCVD - 'd'
+         PILL_HEAL - 'h'
+        PILL_RESET - 'r'
+       PILL_TAILOR - 't'
+      PILL_STALKER - 'p'
+        PILL_LOCAL - 'l'
+FIRST_BUTTON_PRESSED - 'f'
+             SHINE - 'h'
+       PILL_MUTANT - 'u'
+       SHINE_ORDER - 'o'
+Press ESC to quit...
