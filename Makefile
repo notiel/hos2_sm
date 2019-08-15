@@ -170,12 +170,12 @@ BIN_DIR := dbg
 CFLAGS = -g -std=c99 -ffunction-sections -fdata-sections \
 	-O -Wall -W $(INCLUDES) $(DEFINES) 
 
-CPPFLAGS = -g -ffunction-sections -fdata-sections \
+CPPFLAGS = -g -static -ffunction-sections -fdata-sections \
 	-O -Wall -W $(INCLUDES) $(DEFINES)
 
 endif  # .....................................................................
 
-LINKFLAGS := -Wl,-Map,$(BIN_DIR)/$(PROJECT).map,--cref,--gc-sections
+LINKFLAGS := -static -Wl,-Map,$(BIN_DIR)/$(PROJECT).map,--cref,--gc-sections
 
 # is it a GUI application (any GUI resources provided?) ...
 ifneq (,$(RC_SRCS))
