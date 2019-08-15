@@ -114,7 +114,6 @@ QState Health_dead(Health * const me, QEvt const * const e) {
             #ifdef DESKTOP
                 printf("Entered state dead\n");
             #endif /* def DESKTOP */
-			Player_Died(me);
             status_ = Q_HANDLED();
             break;
         }
@@ -142,6 +141,7 @@ QState Health_just_dead(Health * const me, QEvt const * const e) {
             #ifdef DESKTOP
                 printf("Entered state just_dead\n");
             #endif /* def DESKTOP */
+            Player_Died(me);
             status_ = Q_HANDLED();
             break;
         }
