@@ -42,8 +42,12 @@ int main() {
 	printf("5\n");
 	QMSM_INIT(the_health, (QEvt *)0);
     printf("6\n");
+
+  //SIMPLE_DISPATCH(the_health, RESET);
     QEvt e;
     uint8_t c;
+  //e.sig = PILL_LOCAL_SIG;
+  //QMSM_DISPATCH(the_player_type, &e);
     for (;;) {
            static int tickCtr = 1;
            std::string msg;
@@ -71,7 +75,7 @@ int main() {
 		   if (msg.length()) {
             /* dispatch the event into the state machine */
                 QState r;
-                QEvt e;
+             //   QEvt e;
 			    healthQEvt HOS_e;
                 if (e.sig == DMG_RCVD_SIG) {
                     HOS_e.super = e;
