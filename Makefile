@@ -120,8 +120,8 @@ DEFINES   := -DQP_API_VERSION=9999 \
 #
 CC    := gcc
 CPP   := g++
-LINK  := gcc    # for C programs
-#LINK  := g++   # for C++ programs
+#LINK  := gcc    # for C programs
+LINK  := g++   # for C++ programs
 RC    := windres
 
 # basic utilities (included in Qtools for Windows), see:
