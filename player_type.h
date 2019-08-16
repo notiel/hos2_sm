@@ -44,7 +44,7 @@ typedef struct {
 
 /* public: */
     unsigned int TimerRegen;
-    Health CharHealth;
+    Health* CharHealth;
     QStateHandler StartState;
 } Player_type;
 
@@ -53,11 +53,10 @@ QState Player_type_initial(Player_type * const me, QEvt const * const e);
 QState Player_type_global(Player_type * const me, QEvt const * const e);
 QState Player_type_player_type(Player_type * const me, QEvt const * const e);
 QState Player_type_alive(Player_type * const me, QEvt const * const e);
-QState Player_type_local(Player_type * const me, QEvt const * const e);
+QState Player_type_may_regen(Player_type * const me, QEvt const * const e);
 QState Player_type_normal(Player_type * const me, QEvt const * const e);
 QState Player_type_regenerating(Player_type * const me, QEvt const * const e);
 QState Player_type_tailor(Player_type * const me, QEvt const * const e);
-QState Player_type_stalker(Player_type * const me, QEvt const * const e);
 QState Player_type_dead(Player_type * const me, QEvt const * const e);
 
 #ifdef DESKTOP
@@ -79,7 +78,7 @@ typedef struct player_typeQEvt {
 extern QHsm * const the_player_type; /* opaque pointer to the player_type HSM */
 
 /*${SMs::Player_type_ctor} .................................................*/
-void Player_type_ctor(unsigned int State, Health CharHealth);
+void Player_type_ctor(unsigned int State, Health* CharHealth);
 /*$enddecl${SMs::Player_type_ctor} ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 #ifdef __cplusplus
 }

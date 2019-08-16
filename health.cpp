@@ -279,7 +279,7 @@ QState Health_danger(Health * const me, QEvt const * const e) {
         /*${SMs::Health::SM::global::health::alive::danger::HEAL} */
         case HEAL_SIG: {
             /*${SMs::Health::SM::global::health::alive::danger::HEAL::[me->CharHP+((HealthQEvt*)e->val~} */
-            if (me->CharHP + ((healthQEvt*)e)->value  >=  HPThresh) {
+        	if (me->CharHP + ((healthQEvt*)e)->value  >=  HPThresh) {
                 HP_Update(me, me->CharHP + ((healthQEvt*)e)->value);
                 status_ = Q_TRAN(&Health_normal);
             }
@@ -353,6 +353,11 @@ QState Health_normal(Health * const me, QEvt const * const e) {
         case PILL_HEAL_SIG: {
             HP_Update(me, me->MaxHP);
             Flash(255, 165, 0, FLASH_MS);
+            status_ = Q_HANDLED();
+            break;
+        }
+        case HEAL_SIG: {
+            HP_Update(me, me->CharHP + ((healthQEvt*)e)->value);
             status_ = Q_HANDLED();
             break;
         }

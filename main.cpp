@@ -30,7 +30,7 @@ int main() {
     printf("Press ESC to quit...\n");
 
       /* instantiate the HSM and trigger the initial transition */
-    Player_type_ctor(DEAD, health);
+    Player_type_ctor(DEAD, (Health*)the_health);
     printf("3\n");
     Health_ctor(DEAD, 30, 30, 0);
     printf("1\n");

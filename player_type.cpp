@@ -22,7 +22,7 @@ unsigned int HealAmount = 1;
 //End of c code from diagram
 
 /*${SMs::Player_type_ctor} .................................................*/
-void Player_type_ctor(unsigned int State, Health HealthSM)
+void Player_type_ctor(unsigned int State, Health* HealthSM)
 {
     Player_type *me = &player_type;
 
@@ -47,7 +47,7 @@ void Player_type_ctor(unsigned int State, Health HealthSM)
             }
             case STALKER: {
                 me->StartState =
-                (QStateHandler)&Player_type_stalker;
+                (QStateHandler)&Player_type_regenerating;
                 break;
             }
             default:
@@ -104,11 +104,17 @@ QState Player_type_player_type(Player_type * const me, QEvt const * const e) {
         }
         /*${SMs::Player_type::SM::global::player_type::PILL_STALKER} */
         case PILL_STALKER_SIG: {
-            status_ = Q_TRAN(&Player_type_stalker);
+        	MaxHP_Update(me->CharHealth, StalkerHP);
+        	PlayerType_Save(STALKER);
+        	Flash(255, 0, 0, FLASH_MS);
+            status_ = Q_TRAN(&Player_type_regenerating);
             break;
         }
         /*${SMs::Player_type::SM::global::player_type::PILL_LOCAL} */
         case PILL_LOCAL_SIG: {
+        	MaxHP_Update(me->CharHealth, LocalHP);
+        	PlayerType_Save(LOCAL);
+        	Flash(0, 0, 255, FLASH_MS);
             status_ = Q_TRAN(&Player_type_regenerating);
             break;
         }
@@ -153,7 +159,7 @@ QState Player_type_alive(Player_type * const me, QEvt const * const e) {
     return status_;
 }
 /*${SMs::Player_type::SM::global::player_type::alive::local} ...............*/
-QState Player_type_local(Player_type * const me, QEvt const * const e) {
+QState Player_type_may_regen(Player_type * const me, QEvt const * const e) {
     QState status_;
     switch (e->sig) {
         /*${SMs::Player_type::SM::global::player_type::alive::local} */
@@ -162,8 +168,6 @@ QState Player_type_local(Player_type * const me, QEvt const * const e) {
                 printf("Entered state local\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
-            MaxHP_Update(me->CharHealth; LocalHP);
-            Flash(0, 0, 255, FLASH_MS);
             break;
         }
         /*${SMs::Player_type::SM::global::player_type::alive::local} */
@@ -221,7 +225,7 @@ QState Player_type_normal(Player_type * const me, QEvt const * const e) {
             break;
         }
         default: {
-            status_ = Q_SUPER(&Player_type_local);
+            status_ = Q_SUPER(&Player_type_may_regen);
             break;
         }
     }
@@ -262,7 +266,7 @@ QState Player_type_regenerating(Player_type * const me, QEvt const * const e) {
             break;
         }
         default: {
-            status_ = Q_SUPER(&Player_type_local);
+            status_ = Q_SUPER(&Player_type_may_regen);
             break;
         }
     }
@@ -277,8 +281,9 @@ QState Player_type_tailor(Player_type * const me, QEvt const * const e) {
             #ifdef DESKTOP
                 printf("Entered state tailor\n");
             #endif /* def DESKTOP */
-			MaxHP_Update(&(me->CharHealth), TailorHP);
+			MaxHP_Update(me->CharHealth, TailorHP);
             Flash(255, 255, 0, FLASH_MS);
+            PlayerType_Save(TAILOR);
             status_ = Q_HANDLED();
             break;
         }
@@ -297,35 +302,7 @@ QState Player_type_tailor(Player_type * const me, QEvt const * const e) {
     }
     return status_;
 }
-/*${SMs::Player_type::SM::global::player_type::alive::stalker} .............*/
-QState Player_type_stalker(Player_type * const me, QEvt const * const e) {
-    QState status_;
-    switch (e->sig) {
-        /*${SMs::Player_type::SM::global::player_type::alive::stalker} */
-        case Q_ENTRY_SIG: {
-            #ifdef DESKTOP
-                printf("Entered state stalker\n");
-            #endif /* def DESKTOP */
-			MaxHP_Update(&(me->CharHealth), StalkerHP);
-            Flash(255, 0, 0, FLASH_MS);
-            status_ = Q_HANDLED();
-            break;
-        }
-        /*${SMs::Player_type::SM::global::player_type::alive::stalker} */
-        case Q_EXIT_SIG: {
-            #ifdef DESKTOP
-                printf("Exited state stalker\n");
-            #endif /* def DESKTOP */
-            status_ = Q_HANDLED();
-            break;
-        }
-        default: {
-            status_ = Q_SUPER(&Player_type_alive);
-            break;
-        }
-    }
-    return status_;
-}
+
 /*${SMs::Player_type::SM::global::player_type::dead} .......................*/
 QState Player_type_dead(Player_type * const me, QEvt const * const e) {
     QState status_;
@@ -335,6 +312,7 @@ QState Player_type_dead(Player_type * const me, QEvt const * const e) {
             #ifdef DESKTOP
                 printf("Entered state dead\n");
             #endif /* def DESKTOP */
+            PlayerType_Save(DEAD);
             status_ = Q_HANDLED();
             break;
         }
