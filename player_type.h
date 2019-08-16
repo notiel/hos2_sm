@@ -44,7 +44,7 @@ typedef struct {
 
 /* public: */
     unsigned int TimerRegen;
-    Health* CharHealth;
+    Health CharHealth;
     QStateHandler StartState;
 } Player_type;
 
@@ -79,7 +79,7 @@ typedef struct player_typeQEvt {
 extern QHsm * const the_player_type; /* opaque pointer to the player_type HSM */
 
 /*${SMs::Player_type_ctor} .................................................*/
-void Player_type_ctor(unsigned int State, Health* CharHealth);
+void Player_type_ctor(unsigned int State, Health CharHealth);
 /*$enddecl${SMs::Player_type_ctor} ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 #ifdef __cplusplus
 }

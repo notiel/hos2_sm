@@ -22,7 +22,7 @@ unsigned int HealAmount = 1;
 //End of c code from diagram
 
 /*${SMs::Player_type_ctor} .................................................*/
-void Player_type_ctor(unsigned int State, Health* HealthSM)
+void Player_type_ctor(unsigned int State, Health HealthSM)
 {
     Player_type *me = &player_type;
 
@@ -162,7 +162,7 @@ QState Player_type_local(Player_type * const me, QEvt const * const e) {
                 printf("Entered state local\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
-
+            MaxHP_Update(me->CharHealth; LocalHP);
             Flash(0, 0, 255, FLASH_MS);
             break;
         }
@@ -277,7 +277,7 @@ QState Player_type_tailor(Player_type * const me, QEvt const * const e) {
             #ifdef DESKTOP
                 printf("Entered state tailor\n");
             #endif /* def DESKTOP */
-			MaxHP_Update(me->CharHealth, TailorHP);
+			MaxHP_Update(&(me->CharHealth), TailorHP);
             Flash(255, 255, 0, FLASH_MS);
             status_ = Q_HANDLED();
             break;
@@ -306,7 +306,7 @@ QState Player_type_stalker(Player_type * const me, QEvt const * const e) {
             #ifdef DESKTOP
                 printf("Entered state stalker\n");
             #endif /* def DESKTOP */
-			MaxHP_Update(me->CharHealth, StalkerHP);
+			MaxHP_Update(&(me->CharHealth), StalkerHP);
             Flash(255, 0, 0, FLASH_MS);
             status_ = Q_HANDLED();
             break;

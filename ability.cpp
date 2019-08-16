@@ -17,7 +17,7 @@ QHsm * const the_ability = (QHsm *) &ability; /* the opaque pointer */
 unsigned int ChargeTO = CHARGE_TO_S;
 //End of c code from diagram
 
-void Ability_ctor(unsigned int ChargeTime, unsigned int State) {
+void Ability_ctor(unsigned int State, unsigned int ChargeTime) {
     Ability *me = &ability;
         me->ChargeTime = ChargeTime;
         switch (State) {

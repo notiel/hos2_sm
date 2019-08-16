@@ -71,7 +71,7 @@ extern QHsm * const the_ability; /* opaque pointer to the ability HSM */
 
 /*$declare${SMs::Ability_ctor} vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv*/
 /*${SMs::Ability_ctor} .....................................................*/
-void Ability_ctor(unsigned int ChargeTime, unsigned int State);
+void Ability_ctor(unsigned int State, unsigned int ChargeTime);
 /*$enddecl${SMs::Ability_ctor} ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 #ifdef __cplusplus
 }

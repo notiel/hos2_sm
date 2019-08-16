@@ -16,10 +16,9 @@ unsigned int DangerTO = DANGER_TO_S;
 unsigned int DefaultHP = DEFAULT_HP;
 unsigned int HPThresh = HP_THRESH;
 //End of c code from diagramH
-void Health_ctor(
+void Health_ctor(unsigned int State,
     unsigned int HP,
     unsigned int MaxHP,
-    unsigned int State,
     unsigned int DangerTime)
 {
     Health *me = &health;
@@ -312,7 +311,7 @@ QState Health_danger(Health * const me, QEvt const * const e) {
         /*${SMs::Health::SM::global::health::alive::danger::DMG_RCVD} */
         case DMG_RCVD_SIG: {
             /*${SMs::Health::SM::global::health::alive::danger::DMG_RCVD::[me->CharHP-((HealthQEvt*)e)->va~} */
-            if ((me->CharHP - ((healthQEvt*)e)->value) <= 0) {
+            if ((me->CharHP <= ((healthQEvt*)e)->value)) {
                 status_ = Q_TRAN(&Health_just_dead);
             }
             /*${SMs::Health::SM::global::health::alive::danger::DMG_RCVD::[else]} */

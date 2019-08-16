@@ -26,7 +26,7 @@ void HP_Save(unsigned int HP) {
 
 //stub function
 void MaxHP_Save(unsigned int MaxHP) {
-	printf("HP %i saved\n", MaxHP);
+	printf("MaxHP %i saved\n", MaxHP);
  
 }
 
@@ -37,7 +37,7 @@ void DangerTime_Save(unsigned int Time) {
 
 //stub function
 void ChargeTime_Save(unsigned int Time) {
-	printf("DT saved %i \n", Time);
+	printf("CT saved %i \n", Time);
 }
 
 
@@ -77,6 +77,7 @@ void DangerTime_Update(Health* me, unsigned int Time) {
 
 
 void HP_Update(Health* me, int HP) {
+	printf("Try to set %iHP\n", HP);
     if (HP < me->CharHP) {
         IndicateDamage(me);
     }
@@ -84,12 +85,12 @@ void HP_Update(Health* me, int HP) {
         if(HP > 0) {
              me->CharHP = HP;
         } else {
-             me->CharHP = 1;
+             me->CharHP = 0;
         }
     } else {
          me->CharHP = me->MaxHP;
     }
-    HP_Save(HP);   
+    HP_Save(me->CharHP);
 }
 
 void Reset(Health* me) {
@@ -99,7 +100,8 @@ void Reset(Health* me) {
 
 void MaxHP_Update(Health* me, unsigned int MaxHP) {
     me->MaxHP = MaxHP;
-    MaxHP_Save(MaxHP);	
+    MaxHP_Save(MaxHP);
+    HP_Update(me, MaxHP);
 }
 
 void IndicateDamage(Health* me) {

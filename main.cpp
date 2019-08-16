@@ -30,7 +30,7 @@ int main() {
     printf("Press ESC to quit...\n");
 
       /* instantiate the HSM and trigger the initial transition */
-    Player_type_ctor(DEAD, (Health*)the_health);
+    Player_type_ctor(DEAD, health);
     printf("3\n");
     Health_ctor(DEAD, 30, 30, 0);
     printf("1\n");
@@ -82,7 +82,7 @@ int main() {
                     HOS_e.value = 5;
                     r = QMSM_DISPATCH(the_health,  (QEvt *)&HOS_e);
                     r = QMSM_DISPATCH(the_player_type,  (QEvt *)&HOS_e);
-                    r = QMSM_DISPATCH(the_health,  &e);
+                    r = QMSM_DISPATCH(the_ability,  (QEvt *)&HOS_e);
                 } else {
 			        r = QMSM_DISPATCH(the_ability,  &e);
 			        r = QMSM_DISPATCH(the_player_type,  &e);
