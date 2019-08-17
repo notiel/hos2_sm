@@ -28,6 +28,7 @@ void Player_type_ctor(unsigned int State, Health* HealthSM)
 
      me->TimerRegen = 0;
      me->CharHealth = HealthSM;
+     me->Timer = 0;
         switch (State) {
             case DEAD: {
                 me->StartState =
@@ -118,7 +119,6 @@ QState Player_type_player_type(Player_type * const me, QEvt const * const e) {
             status_ = Q_TRAN(&Player_type_regenerating);
             break;
         }
-        /*${SMs::Player_type::SM::global::player_type::PILL_RESET} */
         default: {
             status_ = Q_SUPER(&Player_type_global);
             break;
@@ -135,13 +135,20 @@ QState Player_type_alive(Player_type * const me, QEvt const * const e) {
             #ifdef DESKTOP
                 printf("Entered state alive\n");
             #endif /* def DESKTOP */
-            status_ = Q_HANDLED();
 			SIMPLE_DISPATCH(the_health, RESET);
             SIMPLE_DISPATCH(the_ability, RESET); 
+            status_ = Q_HANDLED();
             break;
         }
         case DIE_SIG: {
             status_ = Q_TRAN(&Player_type_dead);
+            break;
+        }
+        case PILL_RESET_SIG: {
+            SIMPLE_DISPATCH(the_health, RESET);
+            SIMPLE_DISPATCH(the_ability, RESET);
+            status_ = Q_HANDLED();
+            break;
         }
         /*${SMs::Player_type::SM::global::player_type::alive} */
         case Q_EXIT_SIG: {
@@ -240,6 +247,7 @@ QState Player_type_regenerating(Player_type * const me, QEvt const * const e) {
             #ifdef DESKTOP
                 printf("Entered state regenerating\n");
             #endif /* def DESKTOP */
+            me->Timer = 0;
             status_ = Q_HANDLED();
             break;
         }
@@ -253,10 +261,14 @@ QState Player_type_regenerating(Player_type * const me, QEvt const * const e) {
         }
         /*${SMs::Player_type::SM::global::player_type::alive::local::regenerating::TIME_TICK_1S} */
         case TIME_TICK_1S_SIG: {
-            player_typeQEvt new_e;
-            new_e.super.sig = HEAL_SIG;
-            new_e.value = HealAmount;
-            QMSM_DISPATCH(the_health, (QEvt *)&new_e);
+        	me->Timer ++;
+        	if (me->Timer == 10) {
+                player_typeQEvt new_e;
+                new_e.super.sig = HEAL_SIG;
+                new_e.value = HealAmount;
+                QMSM_DISPATCH(the_health, (QEvt *)&new_e);
+        	    me->Timer = 0;
+        	}
             status_ = Q_HANDLED();
             break;
         }

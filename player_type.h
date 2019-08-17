@@ -44,6 +44,7 @@ typedef struct {
 
 /* public: */
     unsigned int TimerRegen;
+    unsigned int Timer;
     Health* CharHealth;
     QStateHandler StartState;
 } Player_type;

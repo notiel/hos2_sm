@@ -31,17 +31,11 @@ int main() {
 
       /* instantiate the HSM and trigger the initial transition */
     Player_type_ctor(DEAD, (Health*)the_health);
-    printf("3\n");
     Health_ctor(DEAD, 30, 30, 0);
-    printf("1\n");
-	Ability_ctor(0, NONE);
-	 printf("2\n");
+    Ability_ctor(0, NONE);
 	QMSM_INIT(the_player_type, (QEvt *)0);
-	printf("4\n");
 	QMSM_INIT(the_ability, (QEvt *)0);
-	printf("5\n");
 	QMSM_INIT(the_health, (QEvt *)0);
-    printf("6\n");
 
   //SIMPLE_DISPATCH(the_health, RESET);
     QEvt e;
