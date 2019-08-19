@@ -175,6 +175,7 @@ QState Ability_mutant(Ability * const me, QEvt const * const e) {
             #ifdef DESKTOP
                 printf("Entered state mutant\n");
             #endif /* def DESKTOP */
+            Flash(255, 255, 255, FLASH_MS);
             status_ = Q_HANDLED();
             break;
         }
@@ -247,7 +248,8 @@ QState Ability_charging(Ability * const me, QEvt const * const e) {
             #ifdef DESKTOP
                 printf("Entered state charging\n");
             #endif /* def DESKTOP */
-			Ability_Save(MUTANT_CHARGING);
+			Flash(255, 255, 255, FLASH_MS);
+            Ability_Save(MUTANT_CHARGING);
             ChargeTime_Update(me, 0);
             SendShining();
             status_ = Q_HANDLED();
@@ -281,6 +283,7 @@ QState Ability_charging(Ability * const me, QEvt const * const e) {
         }
 		case TIME_TICK_1M_SIG: {
 			ChargeTime_Save(me->ChargeTime);
+			status_ = Q_HANDLED();
 			break;
 		}
         default: {

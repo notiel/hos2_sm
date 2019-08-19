@@ -100,6 +100,8 @@ QState Player_type_player_type(Player_type * const me, QEvt const * const e) {
         }
         /*${SMs::Player_type::SM::global::player_type::PILL_TAILOR} */
         case PILL_TAILOR_SIG: {
+        	SIMPLE_DISPATCH(the_health, RESET);
+        	SIMPLE_DISPATCH(the_ability, RESET);
             status_ = Q_TRAN(&Player_type_tailor);
             break;
         }
@@ -108,6 +110,8 @@ QState Player_type_player_type(Player_type * const me, QEvt const * const e) {
         	MaxHP_Update(me->CharHealth, StalkerHP);
         	PlayerType_Save(STALKER);
         	Flash(255, 0, 0, FLASH_MS);
+        	SIMPLE_DISPATCH(the_health, RESET);
+        	SIMPLE_DISPATCH(the_ability, RESET);
             status_ = Q_TRAN(&Player_type_regenerating);
             break;
         }
@@ -116,6 +120,8 @@ QState Player_type_player_type(Player_type * const me, QEvt const * const e) {
         	MaxHP_Update(me->CharHealth, LocalHP);
         	PlayerType_Save(LOCAL);
         	Flash(0, 0, 255, FLASH_MS);
+        	SIMPLE_DISPATCH(the_health, RESET);
+        	SIMPLE_DISPATCH(the_ability, RESET);
             status_ = Q_TRAN(&Player_type_regenerating);
             break;
         }
@@ -135,8 +141,6 @@ QState Player_type_alive(Player_type * const me, QEvt const * const e) {
             #ifdef DESKTOP
                 printf("Entered state alive\n");
             #endif /* def DESKTOP */
-			SIMPLE_DISPATCH(the_health, RESET);
-            SIMPLE_DISPATCH(the_ability, RESET); 
             status_ = Q_HANDLED();
             break;
         }
