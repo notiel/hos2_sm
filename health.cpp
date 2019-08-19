@@ -213,7 +213,7 @@ QState Health_alive(Health * const me, QEvt const * const e) {
         /*${SMs::Health::SM::global::health::alive} */
         case Q_ENTRY_SIG: {
             #ifdef DESKTOP
-                printf("Entered state alive\n");
+                printf("Entered state health alive\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -221,7 +221,7 @@ QState Health_alive(Health * const me, QEvt const * const e) {
         /*${SMs::Health::SM::global::health::alive} */
         case Q_EXIT_SIG: {
             #ifdef DESKTOP
-                printf("Exited state alive\n");
+                printf("Exited state health alive\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -335,7 +335,7 @@ QState Health_normal(Health * const me, QEvt const * const e) {
         /*${SMs::Health::SM::global::health::alive::normal} */
         case Q_ENTRY_SIG: {
             #ifdef DESKTOP
-                printf("Entered state normal\n");
+                printf("Entered state health normal\n");
             #endif /* def DESKTOP */
 			State_Save(NORMAL);
             status_ = Q_HANDLED();
@@ -344,7 +344,7 @@ QState Health_normal(Health * const me, QEvt const * const e) {
         /*${SMs::Health::SM::global::health::alive::normal} */
         case Q_EXIT_SIG: {
             #ifdef DESKTOP
-                printf("Exited state normal\n");
+                printf("Exited state health normal\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;

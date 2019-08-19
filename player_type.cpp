@@ -172,7 +172,7 @@ QState Player_type_may_regen(Player_type * const me, QEvt const * const e) {
         /*${SMs::Player_type::SM::global::player_type::alive::local} */
         case Q_ENTRY_SIG: {
             #ifdef DESKTOP
-                printf("Entered state local\n");
+                printf("Entered state may_regen\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
@@ -180,7 +180,7 @@ QState Player_type_may_regen(Player_type * const me, QEvt const * const e) {
         /*${SMs::Player_type::SM::global::player_type::alive::local} */
         case Q_EXIT_SIG: {
             #ifdef DESKTOP
-                printf("Exited state local\n");
+                printf("Exited state may_regen\n");
             #endif /* def DESKTOP */
             status_ = Q_HANDLED();
             break;
