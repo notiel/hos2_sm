@@ -30,9 +30,9 @@ int main() {
     printf("Press ESC to quit...\n");
 
       /* instantiate the HSM and trigger the initial transition */
-    Player_type_ctor(DEAD, (Health*)the_health);
-    Health_ctor(DEAD, 30, 30, 0);
-    Ability_ctor(0, NONE);
+    Player_type_ctor(TAILOR, (Health*)the_health);
+    Health_ctor(DEAD, 50, 60, 0);
+    Ability_ctor(0, MUTANT_READY);
 	QMSM_INIT(the_player_type, (QEvt *)0);
 	QMSM_INIT(the_ability, (QEvt *)0);
 	QMSM_INIT(the_health, (QEvt *)0);
